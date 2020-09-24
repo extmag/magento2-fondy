@@ -1,5 +1,5 @@
 {
-  "name": "cloudipsp/magento2",
+  "name": "faradey/magento2-fondy",
   "description": "Fondy Magento 2 payment module",
   "type": "magento2-module",
   "version": "1.2.9.1",
