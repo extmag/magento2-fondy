@@ -2,7 +2,7 @@
   "name": "faradey/magento2-fondy",
   "description": "Fondy Magento 2 payment module",
   "type": "magento2-module",
-  "version": "1.2.9.4",
+  "version": "1.2.9.5",
   "license": [
     "OSL-3.0",
     "AFL-3.0"
@@ -34,7 +34,7 @@
       "fraud"
   ],
   "require": {
-    "php": "~7.3.0|~7.4.0"
+    "php": ">=7.4.0"
   },
   "autoload": {
     "files": [ "registration.php" ],
