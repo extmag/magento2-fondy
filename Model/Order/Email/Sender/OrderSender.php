@@ -5,7 +5,6 @@ namespace Fondy\Fondy\Model\Order\Email\Sender;
 use Magento\Sales\Model\Order;
 
 class OrderSender extends \Magento\Sales\Model\Order\Email\Sender\OrderSender {
-
     /**
      * Sends order email to the customer.
      *

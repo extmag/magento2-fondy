@@ -3,8 +3,8 @@
 namespace Fondy\Fondy\Model;
 
 use Magento\Quote\Api\Data\CartInterface;
-use Magento\Sales\Model\Order\Payment\Transaction;
 use Magento\Sales\Model\Order;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class Fondy
@@ -53,6 +53,7 @@ class Fondy extends \Magento\Payment\Model\Method\AbstractMethod
     protected $_logger;
 
     protected $_canUseCheckout = true;
+    private LoggerInterface $loggerInterface;
 
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -68,6 +69,7 @@ class Fondy extends \Magento\Payment\Model\Method\AbstractMethod
         \Magento\Framework\UrlInterface $urlBuilder,
         \Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface $builderInterface,
         \Magento\Sales\Model\OrderFactory $orderFactory,
+        LoggerInterface $loggerInterface,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -87,10 +89,8 @@ class Fondy extends \Magento\Payment\Model\Method\AbstractMethod
             $resource,
             $resourceCollection,
             $data);
-        $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/fondy.log');
-        $this->_logger = new \Zend\Log\Logger();
-        $this->_logger->addWriter($writer);
         $this->_gateUrl = 'https://api.fondy.eu/api/checkout/redirect/';
+        $this->_logger = $loggerInterface;
     }
 
 

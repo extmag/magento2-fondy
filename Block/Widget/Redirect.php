@@ -2,12 +2,13 @@
 
 namespace Fondy\Fondy\Block\Widget;
 
-/**
- * Abstract class
- */
-
+use Fondy\Fondy\Model\Fondy;
+use Magento\Checkout\Model\Session;
 use \Magento\Framework\View\Element\Template;
-
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Sales\Model\Order\Config;
+use Magento\Sales\Model\OrderFactory;
+use Magento\Sales\Model\OrderRepository;
 
 class Redirect extends Template
 {
@@ -48,13 +49,14 @@ class Redirect extends Template
 
 
     /**
-     * @param Template\Context $context
-     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param Context $context
+     * @param Session $checkoutSession
      * @param \Magento\Customer\Model\Session $customerSession
-     * @param \Magento\Sales\Model\OrderFactory $orderFactory
-     * @param \Magento\Sales\Model\Order\Config $orderConfig
+     * @param OrderFactory $orderFactory
+     * @param Config $orderConfig
      * @param \Magento\Framework\App\Http\Context $httpContext
-     * @param \Fondy\Fondy\Model\Fondy $paymentConfig
+     * @param Fondy $paymentConfig
+     * @param OrderRepository $orderRepository
      * @param array $data
      */
     public function __construct(
@@ -67,8 +69,7 @@ class Redirect extends Template
         \Fondy\Fondy\Model\Fondy $paymentConfig,
         \Magento\Sales\Model\OrderRepository $orderRepository,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
         $this->_checkoutSession = $checkoutSession;
         $this->_customerSession = $customerSession;
@@ -80,7 +81,6 @@ class Redirect extends Template
         $this->_orderRepository = $orderRepository;
     }
 
-
     /**
      * Get instructions text from config
      *
@@ -90,7 +90,6 @@ class Redirect extends Template
     {
         return $this->Config->getGateUrl();
     }
-
 
     /**
      * Получить сумму к оплате
@@ -109,14 +108,12 @@ class Redirect extends Template
         return ['error' => 'No data'];
     }
 
-
     /**
      * @return array|null
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getPostData($data = [])
     {
-
         $orderId = $this->_checkoutSession->getLastOrderId();
 
         if ($orderId or isset($data['order'])) {
@@ -137,7 +134,6 @@ class Redirect extends Template
 
         return ['error' => 'No data'];
     }
-
 
     /**
      * Get callback URL
